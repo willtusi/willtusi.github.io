@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>拼豆记录</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- 页面容器 -->
+    <main class="pages">
+
+      <!-- 首页 -->
+      <section class="page page-home is-active" data-page="home">
+        <button class="create-card" type="button" id="createBtn">
+          <span class="create-card__text">创建属于你的拼豆记录</span>
+          <span class="create-card__plus" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M13 6v14M6 13h14"/>
+            </svg>
+          </span>
+        </button>
+        <div class="record-list" id="recordList"></div>
+      </section>
+
+      <!-- 豆池 -->
+      <section class="page page-pool" data-page="pool">
+        <div class="pool-list" id="poolList"></div>
+      </section>
+
+      <!-- 豆色配置页 -->
+      <section class="page page-config" data-page="config">
+        <div class="config-nav">
+          <button class="back-btn" type="button" id="backToPool">
+            <svg width="12" height="20" viewBox="0 0 12 20" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2 2.5 10 10 18"/>
+            </svg>
+            <span>返回豆池</span>
+          </button>
+        </div>
+
+        <div class="config-grid" id="configGrid"></div>
+
+        <div class="config-panel">
+          <div class="count-bar" id="configCountBar"></div>
+          <p class="stock-label">请设置所选豆色的库存</p>
+          <input class="stock-input" id="stockInput" type="number" inputmode="numeric"
+                 min="0" step="1" placeholder="请输入" />
+          <p class="stock-error" id="stockError"></p>
+          <button class="save-btn" type="button" id="saveStockBtn">保存</button>
+        </div>
+      </section>
+
+      <!-- 拼豆记录详情页 -->
+      <section class="page page-detail" data-page="detail">
+        <div class="config-nav">
+          <button class="back-btn" type="button" id="backToHome">
+            <svg width="12" height="20" viewBox="0 0 12 20" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2 2.5 10 10 18"/>
+            </svg>
+            <span>返回首页</span>
+          </button>
+        </div>
+        <div class="detail-grid" id="detailGrid"></div>
+      </section>
+
+    </main>
+
+    <!-- 创建拼豆记录：底部抽屉 -->
+    <div class="sheet-mask" id="sheetMask" hidden></div>
+    <div class="sheet" id="createSheet" hidden>
+      <div class="sheet__body">
+        <div class="sheet-name-row">
+          <span class="sheet-label">豆盘名称</span>
+          <input class="sheet-pill sheet-name-input" id="plateName"
+                 type="text" placeholder="请输入" />
+        </div>
+        <div class="sheet-color-row">
+          <span class="sheet-label" id="beanSectionLabel">选择豆色</span>
+          <div class="bean-rows" id="beanRows"></div>
+        </div>
+      </div>
+      <div class="sheet__footer">
+        <button class="save-btn" type="button" id="sheetSaveBtn">保存</button>
+      </div>
+    </div>
+
+    <!-- 吐司 -->
+    <div class="toast" id="toast" hidden></div>
+
+    <!-- 保存确认弹窗 -->
+    <div class="modal-mask" id="confirmModal" hidden>
+      <div class="modal">
+        <h3 class="modal__title">温馨提示</h3>
+        <p class="modal__line" id="modalLine1"></p>
+        <p class="modal__line" id="modalLine2"></p>
+        <div class="modal__btns">
+          <button class="modal__btn" type="button" id="modalCancel">取消</button>
+          <button class="modal__btn modal__btn--primary" type="button" id="modalConfirm">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 Tab 栏 -->
+    <nav class="tab-bar">
+      <button class="tab-item is-active" type="button" data-target="home">
+        <svg class="tab-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12.2 14 4l10 8.2"/>
+          <path d="M7 10.8V23h14V10.8"/>
+          <path d="M11.5 23v-6h5v6"/>
+        </svg>
+        <span class="tab-label">首页</span>
+      </button>
+      <button class="tab-item" type="button" data-target="pool">
+        <svg class="tab-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18.5 4.2c-4.6 0-9.2 2.6-11.4 6.5-1.9 3.3-1.4 7.1 1 9.6 2.5 2.6 6.4 3.3 9.8 1.9 3.9-1.6 6.6-5.5 6.6-9.6 0-1-.2-2-.6-2.9-.7 1.5-2.2 2.5-3.9 2.5-2.4 0-4.3-1.9-4.3-4.3 0-1.6.8-3 2.1-3.7-.2 0-.5-.1-.7-.1z"/>
+        </svg>
+        <span class="tab-label">豆池</span>
+      </button>
+    </nav>
+
+    <!-- Home 指示条 -->
+    <div class="home-indicator"></div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
